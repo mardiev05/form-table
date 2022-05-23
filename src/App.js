@@ -9,10 +9,7 @@ class App extends Component {
 
 
 
-    clk = () => {
-        console.log("hey")
-    }
-
+    
 
 
     render() {

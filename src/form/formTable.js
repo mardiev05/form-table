@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
+import Table from './Table'
 import "./form.css"
+// import videoBg from "./vid/nature.mp4"
 // import "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
 export default class formTable extends Component {
@@ -8,7 +10,7 @@ export default class formTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            appear: false,
+            appear: "showEl",
             id: 7,
             userList: [
                 {
@@ -70,30 +72,34 @@ export default class formTable extends Component {
         console.log(name, value)
     }
 
-    saveData = (e) => {
-        e.preventDefault()
-        const { fullName, email, phone, id } = this.state
-        const newUser = {
-            fullName,
-            email,
-            phone,
-            id
-        }
-        console.log(newUser)
-        this.setState({
-            userList: [...this.state.userList, newUser],
-            id: id + 1
-        })
-        e.target.reset()
-    }
-
-
     deletHandler = (id) => {
         const filterd = this.state.userList.filter(item => item.id !== id)
         this.setState({
             userList: filterd
         })
     }
+
+    saveData = (e) => {
+        e.preventDefault()
+        const { fullName, email, phone, id, userList } = this.state
+        const newUser = {
+            fullName,
+            email,
+            phone,
+            id
+        }
+        // const unShiftUser = this.state.userList
+        // unShiftUser.unshift(newUser)
+        this.setState({
+            userList: [newUser, ...userList],
+            id: id + 1
+        })
+        this.formAppear("showEl")
+        e.target.reset()
+    }
+
+
+
 
     formAppear = (value) => {
         this.setState({
@@ -106,57 +112,38 @@ export default class formTable extends Component {
 
 
     render() {
-        const { appear, userList } = this.state
+        const { appear, userList } = this.state;
+
         return (
             <div>
-                <div className="btns">
-                    <button onClick={() => this.formAppear(true)}>True</button>
+
+                <div className="video__cont">
+                    <video src="https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/49_20HQOeijh9fog1/videoblocks-19122_r8vpa82td__d9232c9df915f4211b6cacf935cd2df7__P360.mp4" autoPlay loop muted />
+
+                </div>
+                <div className={appear !== "showEl" && "form__cont"}>
+                    <form className={appear !== "showEl" ? "show " : "hidden"} onSubmit={this.saveData}>
+                        <p className="closeBtn" onClick={() => this.formAppear("showEl")}>X</p>
+                        <div className="input">
+                            <label htmlFor="fullName">Full Name</label>
+                            <input id="fullName" type="text" name="fullName" onChange={this.inputHandler} placeholder="Enter Your Full Name" required />
+                        </div>
+                        <div className="input">
+                            <label htmlFor="email">Email Address</label>
+                            <input id="email" type="email" name="email" onChange={this.inputHandler} placeholder="Enter Your Email Address" required />
+                        </div>
+                        <div className="input">
+                            <label htmlFor="phone">Phone Number</label>
+                            <input id="phone" type="text" name="phone" onChange={this.inputHandler} placeholder="Enter Your Phone Number" required />
+                        </div>
+                        <button type="submit">Sumbit</button>
+                    </form>
                 </div>
 
-
-
-
-
-
-                <form className={appear ? "show" : "hidden"} onSubmit={this.saveData}>
-                    <p className="closeBtn" onClick={() => this.formAppear(false)}>X</p>
-                    <div className="input">
-                        <label htmlFor="fullName">Full Name</label>
-                        <input id="fullName" type="text" name="fullName" onChange={this.inputHandler} placeholder="Enter Your Full Name" required />
-                    </div>
-                    <div className="input">
-                        <label htmlFor="email">Email Address</label>
-                        <input id="email" type="email" name="email" onChange={this.inputHandler} placeholder="Enter Your Email Address" required />
-                    </div>
-                    <div className="input">
-                        <label htmlFor="phone">Phone Number</label>
-                        <input id="phone" type="text" name="phone" onChange={this.inputHandler} placeholder="Enter Your Phone Number" required />
-                    </div>
-                    <button type="submit">Sumbit</button>
-                </form>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userList.map(item => (
-                            <tr key={item.id}>
-                                <th>{item.fullName}</th>
-                                <th>{item.email}</th>
-                                <th>{item.phone}</th>
-                                <th>
-                                    <button className="delete" onClick={() => this.deletHandler(item.id)}>Delete</button>
-                                </th>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <Table data={userList} display={appear} deleteUser={this.deletHandler} />
+                <div className="btns">
+                    <button className={appear !== "showEl" ? "hidden" : "addBtn"} onClick={() => this.formAppear(true)}>Add User</button>
+                </div>
             </div>
 
         )

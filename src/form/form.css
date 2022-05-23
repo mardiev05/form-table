@@ -1,10 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+h1 {
+    text-align: center;
+    color: #ff0000;
+    font-family: monospace;
+    margin: 20px 0;
 }
 
 table {
     width: 100%;
-    margin-top: 280px;
 }
 
 tr {
@@ -24,7 +36,8 @@ thead tr th {
 }
 
 tbody tr th {
-    background-color: #1480b6;
+    background-color: #23323a;
+    color: #fff;
     padding: 8px;
     font-weight: normal;
     border: 3px solid rgb(255, 255, 255);
@@ -35,6 +48,7 @@ tbody tr th {
     background-color: transparent;
     border: none;
     width: 100%;
+    color: #ff0000;
 }
 
 form {
@@ -45,13 +59,21 @@ form {
     border-radius: 20px;
     background-color: darkgrey;
     transition: all 0.8s ease-in-out;
-    overflow: hidden;
+}
+
+.form__cont {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .closeBtn {
     position: absolute;
     right: 14px;
-    top: -14px;
+    top: 5px;
     font-family: sans-serif;
     font-size: 20px;
     cursor: pointer;
@@ -70,26 +92,37 @@ input {
     font-size: 16px;
 }
 
+.btns {
+    text-align: end;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.addBtn {
+    padding: 7px 18px;
+    font-size: 15px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 5px 5px 50px #999;
+    cursor: pointer;
+}
+
 .hidden {
-    position: absolute;
-    right: -450px;
-    top: 10px;
+    display: none;
 }
 
 .show {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    position: fixed;
+    right: 35%;
+    top: 35%;
 }
 
-modal {
-    position: fixed;
-    z-index: 1;
-    left: 0;
+video {
+    position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+    object-fit: cover;
 }
